@@ -1,16 +1,16 @@
-const app = require("./app");
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const app = require("./app");
 
-// mongoose pass VTOxqEdpBjeWTUP5 delivery-app-user
-const DB_HOST =
-  "mongodb+srv://delivery-app-user:VTOxqEdpBjeWTUP5@atlascluster.exs8a4x.mongodb.net/delivery?retryWrites=true&w=majority";
+dotenv.config();
+const { DB_HOST, PORT } = process.env;
 
 mongoose.set("strictQuery", true);
 
 mongoose
   .connect(DB_HOST)
   .then(() => {
-    app.listen(5000, () => {
+    app.listen(PORT || 5000, () => {
       console.log("Backend server is running");
     });
   })
