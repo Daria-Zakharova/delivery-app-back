@@ -1,4 +1,5 @@
 const { model, Schema, SchemaTypes } = require("mongoose");
+const handleMongooseError = require("../utils/handle-mongoose-err");
 
 const orderSchema = new Schema({
   user: {
@@ -10,9 +11,10 @@ const orderSchema = new Schema({
   cart: {
     goods: [
       {
-        id: { type: SchemaTypes.ObjectId, required: true },
+        productId: { type: SchemaTypes.ObjectId, required: true },
         amount: { type: Number, min: 1, required: true },
       },
+      { id: false },
     ],
     status: {
       type: String,
@@ -26,6 +28,7 @@ const orderSchema = new Schema({
   },
 });
 
+orderSchema.post("save", handleMongooseError);
 const Order = model("order", orderSchema);
 
 module.exports = Order;

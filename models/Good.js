@@ -1,4 +1,5 @@
 const { model, Schema, SchemaTypes } = require("mongoose");
+const handleMongooseError = require("../utils/handle-mongoose-err");
 
 const goodSchema = new Schema({
   name: { type: String, required: true },
@@ -59,6 +60,7 @@ const goodSchema = new Schema({
   },
 });
 
+goodSchema.post("save", handleMongooseError);
 const Good = model("good", goodSchema);
 
 module.exports = Good;
